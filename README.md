@@ -98,6 +98,10 @@ console.log(`Avg Outside Temp on the 15th: ${day15Temp}°C`);
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+
+* devices whose GUID contains `/` or `#` (for example after a board swap) keep the device name as the object id, and reads and commands pass that original GUID to the client library (#90). The HTTP request path is fixed in panasonic-comfort-cloud-client; update that dependency once the release is published
+
 ### 3.5.0 (2026-10-25)
 
 * fixed login error 4106 "New version app has been published": the app version is now sent together with the matching platform; versions are read from Google Play and the App Store and tried in turn (#141)

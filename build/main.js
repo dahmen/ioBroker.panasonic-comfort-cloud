@@ -334,8 +334,7 @@ class PanasonicComfortCloud extends utils.Adapter {
   }
   async refreshDevice(guid, deviceName) {
     try {
-      const encodedGuid = this.encodeGuidForPath(guid);
-      const device = await this.comfortCloudClient.getDevice(encodedGuid, deviceName);
+      const device = await this.comfortCloudClient.getDevice(guid, deviceName);
       if (!device) {
         return;
       }
@@ -359,8 +358,7 @@ class PanasonicComfortCloud extends utils.Adapter {
       await Promise.all(
         deviceInfos.map(async (deviceInfo) => {
           try {
-            const encodedGuid = this.encodeGuidForPath(deviceInfo.guid);
-            const device = await this.comfortCloudClient.getDevice(encodedGuid, deviceInfo.name);
+            const device = await this.comfortCloudClient.getDevice(deviceInfo.guid, deviceInfo.name);
             if (device != null) {
               device.name = deviceInfo.name;
               device.guid = deviceInfo.guid;
@@ -386,8 +384,7 @@ class PanasonicComfortCloud extends utils.Adapter {
         this.log.debug(`Device info from group ${deviceInfo.guid}, ${deviceInfo.name}.`);
         let device = null;
         try {
-          const encodedGuid = this.encodeGuidForPath(deviceInfo.guid);
-          device = await this.comfortCloudClient.getDevice(encodedGuid, deviceInfo.name);
+          device = await this.comfortCloudClient.getDevice(deviceInfo.guid, deviceInfo.name);
         } catch (error) {
           await this.handleDeviceError(deviceInfo.name, error);
           return;
@@ -713,13 +710,6 @@ class PanasonicComfortCloud extends utils.Adapter {
   trimAll(text) {
     const newText = text.trim().replace(/(\r\n|\n|\r)/gm, "");
     return newText;
-  }
-  encodeGuidForPath(guid) {
-    try {
-      return encodeURIComponent(decodeURIComponent(guid));
-    } catch {
-      return encodeURIComponent(guid);
-    }
   }
 }
 if (module.parent) {
